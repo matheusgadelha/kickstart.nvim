@@ -107,6 +107,15 @@ require('lazy').setup({
     },
   },
 
+  -- Copilot-related packages
+  "zbirenbaum/copilot.lua",
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
@@ -131,10 +140,10 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'bluz71/vim-moonfly-colors',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'moonfly'
     end,
   },
 
@@ -145,7 +154,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'moonfly',
         component_separators = '|',
         section_separators = '',
       },
@@ -507,10 +516,19 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
+    { name = "copilot", group_index = 2 },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
 }
+
+-- Copilot config
+local copilot = require 'copilot'
+copilot.setup({
+  -- disables copilot panel to not mess up nvm-cmp
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
